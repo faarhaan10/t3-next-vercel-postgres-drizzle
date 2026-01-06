@@ -12,6 +12,15 @@ const globalForDb = globalThis as unknown as {
   conn: postgres.Sql | undefined;
 };
 
+const url = env.DATABASE_URL;
+try {
+  const u = new URL(url);
+  console.log("[DB]", { host: u.hostname, port: u.port, db: u.pathname });
+} catch {
+  console.log("[DB] DATABASE_URL not a valid URL");
+}
+
+
 const conn = globalForDb.conn ?? postgres(env.DATABASE_URL);
 if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 

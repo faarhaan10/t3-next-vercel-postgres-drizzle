@@ -7,6 +7,8 @@ export const postRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(({ input }) => {
+      console.log("DB host:", new URL(process.env.DATABASE_URL ??"").hostname);
+
       return {
         greeting: `Hello ${input.text}`,
       };
